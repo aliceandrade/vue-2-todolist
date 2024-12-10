@@ -11,65 +11,55 @@
         <option value="medium">Medium</option>
         <option value="low">Low</option>
       </select>
-      <button class="border-0" @click="open = true">add</button>
+      <button class="border-0" @click="addForm">add</button>
       <div   v-if="open"  >
-        <FormItem  @cancel="open = false"/>
+        <FormItem  :item="item" @save="save" @cancel="open = false"/>
 
       </div>
     </div>
     <ul>
-      <TaskItem  v-for="listItem in list" v-bind:key="listItem.id" :item="listItem" @edit="editItem" @delete="deleteItem"/>
+      <TaskItem  v-for="listItem in list" v-bind:key="listItem.id" :item="listItem" @edit="editItem"  @delete="deleteItem"/>
     </ul>
   </div>
 </template>
 
 <script>
-import TaskItem from './TaskItem.vue';
-import FormItem from './FormItem.vue';
+import TaskItem from './TaskItem.vue'
+import FormItem from './FormItem.vue'
 
 const open = false;
-const list = [
-      {
-        id:1,
-        title: "Lavar a calça",
-        description: "loren ipsin",
-        priority: "low",
-        completed: false
-      },
-      {
-        id:2,
-        title: "Lavar a rua",
-        description: "loren ipsin",
-        priority: "medium",
-        completed: true
-      },
-      {
-        id:3,
-        title: "Estudar",
-        description: "loren ipsin",
-        priority: "high",
-        completed: false
-      }
-    ]; 
-    
+  
 
 export default {
   name: 'TodoList',
   components: {TaskItem, FormItem},
 
   methods: {
-    deleteItem:function (item) {
-      console.log('item', JSON.stringify(item))
-      list.pop(0);
+    deleteItem(item) {
+      this.$store.commit('deleteItem', item)
     },
-    editItem: function (item) {
-      console.log('item', JSON.stringify(item));
+    editItem(item) {
+      this.$data.item = item
+      this.$data.open = true
+    },
+    save(item){
+      this.$store.commit('saveItem', item)
+      this.$data.open = false
+    },
+    addForm() {
+      this.$data.item = {}
+      this.$data.open = true
     }
+
   },
 
-  
+  computed: {
+    list () {
+      return this.$store.state.list
+    }
+  },
   data: () => ({
-    list,
+    item: {},
     open
   } )
 }

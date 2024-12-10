@@ -5,13 +5,69 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import './app.scss'
+import 'es6-promise/auto'
+import Vuex from 'vuex'
 
+Vue.use(Vuex)
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
+const store = new Vuex.Store({
+  state: {
+    list:[
+      {
+        id:1,
+        title: "Lavar a calça",
+        description: "loren ipsin",
+        priority: "low",
+        completed: false
+      },
+      {
+        id:2,
+        title: "Lavar a rua",
+        description: "loren ipsin",
+        priority: "medium",
+        completed: true
+      },
+      {
+        id:3,
+        title: "Estudar",
+        description: "loren ipsin",
+        priority: "high",
+        completed: false
+      }
+    ]
+  },
+  mutations: {
+    deleteItem (state, item) {
+      const index =  state.list.findIndex(e => e.id === item.id)
+      if (index !== -1) {
+        state.list.splice(index, 1)
+      }
+    },
+    saveItem(state, item) {
+      if (!item.id) {
+        item.id = Math.floor(Math.random() * 100000)
+        state.list.push(item)
+        return;
+      }
+      const index =  state.list.findIndex(e => e.id === item.id)
+      if (index !== -1) {
+        state.list.splice(index, 1, item)
+      }
+    }
+  }
+})
+ 
 
 new Vue({
   render: h => h(App),
+  store: store,
+
 }).$mount('#app')
+
+
+
+
