@@ -5,13 +5,13 @@
 
 
     <div class="filter d-flex flex-row justify-content-center">
-      <select name="">
-        <option value="high">All</option>
-        <option value="high">High</option>
-        <option value="medium">Medium</option>
-        <option value="low">Low</option>
+      <select class="form-select w-25" v-model="filterPriority">
+        <option value="all">Todos</option>
+        <option value="low">Baixa</option>
+        <option value="medium">Média</option>
+        <option value="high">Alta</option>
       </select>
-      <button class="border-0" @click="addForm">add</button>
+      <button class="border-0 btn btn-secondary" @click="addForm">add</button>
       <div   v-if="open"  >
         <FormItem  :item="item" @save="save" @cancel="open = false"/>
 

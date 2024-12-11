@@ -41,6 +41,14 @@ const store = new Vuex.Store({
     ]
   },
   mutations: {
+    initialiseStore(state) {
+			// Check if the ID exists
+			if(localStorage.getItem('store')) {
+				// Replace the state object with the stored item
+				this.replaceState(
+					Object.assign(state, JSON.parse(localStorage.getItem('store')))
+				);
+			}},
     deleteItem (state, item) {
       const index =  state.list.findIndex(e => e.id === item.id)
       if (index !== -1) {
@@ -58,6 +66,21 @@ const store = new Vuex.Store({
         state.list.splice(index, 1, item)
       }
     }
+  }, 
+  getters: {
+    // Retorna a lista filtrada de acordo com os parâmetros
+    filteredList(state) {
+      return (completed, priority) => {
+        let filtered = state.list;
+
+        // Filtrar por 'priority'
+        if (priority !== 'all') {
+          filtered = filtered.filter(item => item.priority === priority);
+        }
+
+        return filtered;
+      };
+    }
   }
 })
  
@@ -66,8 +89,16 @@ new Vue({
   render: h => h(App),
   store: store,
 
+	beforeCreate() {
+		this.$store.commit('initialiseStore');
+	},
+  
+
 }).$mount('#app')
 
-
+store.subscribe((mutation, state) => {
+	// Store the state object as a JSON string
+	localStorage.setItem('store', JSON.stringify(state));
+});
 
 

@@ -1,23 +1,23 @@
 <template>
-    <dialog open>
+    <dialog open class="d-flex text-left gap-2 flex-column border-1 bg-success-subtle">
         <input type="hidden" v-model="id" />
-        <label for="title">
-            <span>Title*</span>
-            <input type="text" v-model="title" />
+        <label class="d-flex flex-column" for="title">
+            <span  class="text-start">Title*</span>
+            <input type="text" class="form-control" v-model="title" />
         </label>
-        <label for="description">
-            <span>description</span>
-            <textarea type="text" v-model="description"></textarea>
+        <label class="d-flex flex-column" for="description">
+            <span class="text-left  text-start">description</span>
+            <textarea type="text" class="form-control" v-model="description"></textarea>
         </label>
-        <label for="priority">
-            <span>Priority</span>
-            <select name="" v-model="priority">
+        <label class="d-flex flex-column" for="priority">
+            <span class="text-start">Priority</span>
+            <select class="form-select" name="" v-model="priority">
             <option value="high">High</option>
             <option value="medium">Medium</option>
             <option value="low">Low</option>
             </select>
-            <button type="button"  @click.prevent="$emit('cancel')">cancel</button>
-            <button type="button" @click.prevent="save" >save</button>
+            <button class="mt-2 btn btn-primary" type="button"  @click.prevent="$emit('cancel')">cancel</button>
+            <button class="mt-2 btn btn-primary" type="button" @click.prevent="save" >save</button>
         </label>
     </dialog>
 </template>
