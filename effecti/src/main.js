@@ -21,21 +21,24 @@ const store = new Vuex.Store({
         id:1,
         title: "Lavar a calça",
         description: "loren ipsin",
-        priority: "low",
+        // priority: "low",
+        priority: 3,
         completed: false
       },
       {
         id:2,
         title: "Lavar a rua",
         description: "loren ipsin",
-        priority: "medium",
+        // priority: "medium",
+        priority: 2,
         completed: true
       },
       {
         id:3,
         title: "Estudar",
         description: "loren ipsin",
-        priority: "high",
+        // priority: "high",
+        priority: 1,
         completed: false
       }
     ]
@@ -59,13 +62,19 @@ const store = new Vuex.Store({
       if (!item.id) {
         item.id = Math.floor(Math.random() * 100000)
         state.list.push(item)
-        return;
+        return
       }
       const index =  state.list.findIndex(e => e.id === item.id)
       if (index !== -1) {
         state.list.splice(index, 1, item)
       }
-    }
+    },
+    completedItem(state, item) {
+      const index = state.list.findIndex(e => e.id === item.id)
+      if (index !== -1) {
+        state.list.splice(index, 1, { ...item, completed: true })
+      }
+    },
   }, 
   getters: {
     // Retorna a lista filtrada de acordo com os parâmetros

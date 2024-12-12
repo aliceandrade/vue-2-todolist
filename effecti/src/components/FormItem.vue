@@ -12,9 +12,9 @@
         <label class="d-flex flex-column" for="priority">
             <span class="text-start">Priority</span>
             <select class="form-select" name="" v-model="priority">
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
+              <option value="1">High</option>
+              <option value="2">Medium</option>
+              <option value="3">Low</option>
             </select>
             <button class="mt-2 btn btn-primary" type="button"  @click.prevent="$emit('cancel')">cancel</button>
             <button class="mt-2 btn btn-primary" type="button" @click.prevent="save" >save</button>
